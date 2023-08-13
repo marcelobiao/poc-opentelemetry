@@ -1,9 +1,15 @@
-version: '3.0'
-
+version: '3.0'  
 services:
+  go-app:
+    build:
+      context: "./apps/go-app/"
+      dockerfile: Dockerfile
+    container_name: "go-app-${PROJECT_NAME}"
+    ports:
+      - 8000:8000
   zipkin:
     image: openzipkin/zipkin
-    container_name: zipkin
+    container_name: "zipkin-${PROJECT_NAME}"
     ports:
       - 9411:9411
 
