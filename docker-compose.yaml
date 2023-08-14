@@ -5,6 +5,8 @@ services:
       context: "./apps/go-app/"
       dockerfile: Dockerfile
     container_name: "go-app-${PROJECT_NAME}"
+    volumes:
+      - ./apps/go-app:/app
     ports:
       - 8000:8000
   zipkin:

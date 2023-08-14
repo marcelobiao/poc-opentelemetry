@@ -1,0 +1,14 @@
+version: "3"
+
+dotenv: [ ".env" ]
+
+tasks:
+  run:
+    desc: "Executa o projeto"
+    cmds: 
+      - "docker-compose up --build -d"
+  stop:
+    desc: "Para o projeto"
+    cmds:
+      - "docker-compose down"
+    
