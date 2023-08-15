@@ -14,6 +14,13 @@ services:
     container_name: "zipkin-${PROJECT_NAME}"
     ports:
       - 9411:9411
-
-#go-service
+  mongodb:
+    hostname: "mongo-${PROJECT_NAME}"
+    container_name: "mongo-${PROJECT_NAME}"
+    image: "mongo:4"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: test
+      MONGO_INITDB_ROOT_PASSWORD: test
+    ports:
+      - "27017:27017"
 #node-service
