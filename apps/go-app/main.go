@@ -9,7 +9,8 @@ import (
 
 func main() {
 	// Configurando exporter
-	exporter := app.GetZipkinExporter("http://localhost:9411/api/v2/spans")
+	// exporter := app.GetZipkinExporter("http://localhost:9411/api/v2/spans")
+	exporter := app.GetJaegerExporter("http://localhost:14268/api/traces")
 
 	// Configurando tracer
 	tp := app.InitOtel(exporter)
@@ -23,6 +24,6 @@ func main() {
 	app.StartMongo()
 
 	// Configurando server
-	app.StartGinWebServer()
-	// app.StartFiberWebServer()
+	// app.StartGinWebServer()
+	app.StartFiberWebServer()
 }

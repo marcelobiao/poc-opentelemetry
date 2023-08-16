@@ -8,7 +8,7 @@ tasks:
     cmds: 
       - "docker-compose up --build -d"
   stop:
-    desc: "Para o projeto"
+    desc: "Parar o projeto"
     cmds:
       - "docker-compose down"
     

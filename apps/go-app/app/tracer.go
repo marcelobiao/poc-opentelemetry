@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/exporters/jaeger"
 	"go.opentelemetry.io/otel/exporters/zipkin"
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
@@ -28,9 +29,17 @@ func InitOtel(exp sdktrace.SpanExporter) *sdktrace.TracerProvider {
 }
 
 func GetZipkinExporter(host string) sdktrace.SpanExporter {
-	zipkinConn, err := zipkin.New("http://localhost:9411/api/v2/spans")
+	zipkinConn, err := zipkin.New(host)
 	if err != nil {
 		log.Fatal(err)
 	}
 	return zipkinConn
+}
+
+func GetJaegerExporter(host string) sdktrace.SpanExporter {
+	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(host)))
+	if err != nil {
+		log.Fatal(err)
+	}
+	return exp
 }

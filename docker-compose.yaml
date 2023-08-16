@@ -9,11 +9,7 @@ services:
       - ./apps/go-app:/app
     ports:
       - 8000:8000
-  zipkin:
-    image: openzipkin/zipkin
-    container_name: "zipkin-${PROJECT_NAME}"
-    ports:
-      - 9411:9411
+#node-service
   mongodb:
     hostname: "mongo-${PROJECT_NAME}"
     container_name: "mongo-${PROJECT_NAME}"
@@ -23,4 +19,25 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: test
     ports:
       - "27017:27017"
-#node-service
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: "zipkin-${PROJECT_NAME}"
+    ports:
+      - 9411:9411
+  #jaeger:
+  #  image: jaegertracing/example-hotrod:1.47
+  #  container_name: "jaeger-${PROJECT_NAME}"
+  #  ports:
+  #    - 6831:6831/udp 
+  #    - 6832:6832/udp 
+  #    - 5778:5778 
+  #    - 16686:16686 
+  #    - 4317:4317 
+  #    - 4318:4318 
+  #    - 14250:14250 
+  #    - 14268:14268 
+  #    - 14269:14269 
+  #    - 9411:9411 
+  #  environment:
+  #    - COLLECTOR_ZIPKIN_HOST_PORT=":9411"
+  #    - COLLECTOR_OTLP_ENABLED="true"
