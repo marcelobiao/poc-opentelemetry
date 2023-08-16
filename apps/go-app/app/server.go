@@ -44,7 +44,7 @@ func StartFiberWebServer() {
 		results := make([]interface{}, 0)
 		cur.All(c.Context(), &results)
 
-		c.SendStatus(http.StatusAccepted)
+		c.SendStatus(http.StatusOK)
 		c.JSON(results)
 		return nil
 	})

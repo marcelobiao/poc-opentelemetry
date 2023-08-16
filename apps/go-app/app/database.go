@@ -13,12 +13,13 @@ var DBClient *mongo.Client
 
 func StartMongo() {
 	opts := options.Client()
+
 	// mongo OTEL instrumentation
 	opts.Monitor = otelmongo.NewMonitor()
 	opts.ApplyURI("mongodb://test:test@localhost:27017")
 	DBClient, _ = mongo.Connect(context.Background(), opts)
 
-	// seed the database with some todo's
+	// seed database
 	docs := []interface{}{
 		bson.D{{"id", "1"}, {"title", "Buy groceries"}},
 		bson.D{{"id", "2"}, {"title", "install Aspecto.io"}},

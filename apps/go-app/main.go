@@ -9,8 +9,8 @@ import (
 
 func main() {
 	// Configurando exporter
-	// exporter := app.GetZipkinExporter("http://localhost:9411/api/v2/spans")
-	exporter := app.GetJaegerExporter("http://localhost:14268/api/traces")
+	exporter := app.GetZipkinExporter("http://localhost:9411/api/v2/spans")
+	// exporter := app.GetJaegerExporter("http://localhost:14268/api/traces")
 
 	// Configurando tracer
 	tp := app.InitOtel(exporter)
