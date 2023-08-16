@@ -8,7 +8,10 @@ services:
     volumes:
       - ./apps/go-app:/app
     ports:
-      - 8000:8000
+      - 8080:8080
+      - 8081:8081
+    networks:
+      - local-network
 #node-service
   mongodb:
     hostname: "mongo-${PROJECT_NAME}"
@@ -18,12 +21,16 @@ services:
       MONGO_INITDB_ROOT_USERNAME: test
       MONGO_INITDB_ROOT_PASSWORD: test
     ports:
-      - "27017:27017"
+      - "27017:27017"    
+    networks:
+      - local-network
   zipkin:
     image: openzipkin/zipkin
     container_name: "zipkin-${PROJECT_NAME}"
     ports:
       - 9411:9411
+    networks:
+      - local-network
   jaeger:
     image: jaegertracing/all-in-one:latest
     container_name: "jaeger-${PROJECT_NAME}"
@@ -33,3 +40,7 @@ services:
     environment:
       - COLLECTOR_OTLP_ENABLED=true
       - LOG_LEVEL=debug
+    networks:
+      - local-network
+networks:
+  local-network:

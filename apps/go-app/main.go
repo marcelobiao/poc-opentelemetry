@@ -8,11 +8,10 @@ import (
 )
 
 func main() {
-	// Configurando exporter
-	exporter := app.GetZipkinExporter("http://localhost:9411/api/v2/spans")
-	// exporter := app.GetJaegerExporter("http://localhost:14268/api/traces")
+	// config exporter
+	exporter := app.GetZipkinExporter("http://zipkin:9411/api/v2/spans")
 
-	// Configurando tracer
+	// init otel
 	tp := app.InitOtel(exporter)
 	defer func() {
 		if err := tp.Shutdown(context.Background()); err != nil {
@@ -20,10 +19,10 @@ func main() {
 		}
 	}()
 
-	// Configurando database
-	app.StartMongo()
+	// init database
+	app.StartMongo("mongodb://test:test@mongodb:27017")
 
-	// Configurando server
-	// app.StartGinWebServer()
+	// run webservers
+	go app.StartGinWebServer()
 	app.StartFiberWebServer()
 }

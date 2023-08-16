@@ -11,19 +11,18 @@ import (
 
 var DBClient *mongo.Client
 
-func StartMongo() {
+func StartMongo(uri string) {
 	opts := options.Client()
 
-	// mongo OTEL instrumentation
+	// mongo otel instrumentation
 	opts.Monitor = otelmongo.NewMonitor()
-	opts.ApplyURI("mongodb://test:test@localhost:27017")
+	opts.ApplyURI(uri)
 	DBClient, _ = mongo.Connect(context.Background(), opts)
 
 	// seed database
 	docs := []interface{}{
-		bson.D{{"id", "1"}, {"title", "Buy groceries"}},
-		bson.D{{"id", "2"}, {"title", "install Aspecto.io"}},
-		bson.D{{"id", "3"}, {"title", "Buy dogz.io domain"}},
+		bson.D{{"id", "1"}, {"title", "todo 1"}},
+		bson.D{{"id", "2"}, {"title", "todo 2"}},
 	}
 	DBClient.Database("todo").Collection("todos").InsertMany(context.Background(), docs)
 }

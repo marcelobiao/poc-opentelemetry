@@ -11,6 +11,6 @@ ADD . .
 RUN go mod download
 RUN CGO_ENABLED=0 GOOS=linux go build -o /build/go-app
 
-EXPOSE 8000
+EXPOSE 8080 8081
 
 CMD [ "/build/go-app" ]
