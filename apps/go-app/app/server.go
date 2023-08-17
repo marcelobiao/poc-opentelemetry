@@ -1,6 +1,7 @@
 package app
 
 import (
+	"io"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -8,6 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 )
 
 func StartGinWebServer() {
@@ -21,6 +23,12 @@ func StartGinWebServer() {
 
 		results := make([]interface{}, 0)
 		cur.All(c, &results)
+
+		client := http.Client{Transport: otelhttp.NewTransport(http.DefaultTransport)}
+		req, _ := http.NewRequestWithContext(c.Request.Context(), "GET", "http://go-app-2:8090/ping", nil)
+		res, _ := client.Do(req)
+		body, _ := io.ReadAll(res.Body)
+		results = append(results, string(body))
 
 		c.JSON(http.StatusOK, results)
 	})
@@ -38,6 +46,9 @@ func StartFiberWebServer() {
 
 		results := make([]interface{}, 0)
 		cur.All(c.Context(), &results)
+
+		resp, _ := otelhttp.Get(c.Context(), "http://go-app-2:8090/ping")
+		results = append(results, resp)
 
 		c.SendStatus(http.StatusOK)
 		c.JSON(results)

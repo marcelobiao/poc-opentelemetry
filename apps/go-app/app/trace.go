@@ -10,7 +10,10 @@ import (
 	"go.opentelemetry.io/otel/sdk/resource"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
+	"go.opentelemetry.io/otel/trace"
 )
+
+var Tracer trace.Tracer
 
 func InitOtel(exp sdktrace.SpanExporter) *sdktrace.TracerProvider {
 	tp := sdktrace.NewTracerProvider(
@@ -27,7 +30,7 @@ func InitOtel(exp sdktrace.SpanExporter) *sdktrace.TracerProvider {
 		propagation.TraceContext{},
 		propagation.Baggage{},
 	))
-
+	Tracer = tp.Tracer("")
 	return tp
 }
 
