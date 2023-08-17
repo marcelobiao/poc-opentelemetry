@@ -12,7 +12,18 @@ services:
       - 8081:8081
     networks:
       - local-network
-#node-service
+  go-app-2:
+    build:
+      context: "./apps/go-app-2/"
+      dockerfile: Dockerfile
+    container_name: "go-app-2-${PROJECT_NAME}"
+    volumes:
+      - ./apps/go-app-2:/app
+    ports:
+      - 8090:8090
+      - 8091:8091
+    networks:
+      - local-network
   mongodb:
     hostname: "mongo-${PROJECT_NAME}"
     container_name: "mongo-${PROJECT_NAME}"
