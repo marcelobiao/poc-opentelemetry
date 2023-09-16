@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 
@@ -42,19 +43,18 @@ func StartFiberWebServer() {
 
 	app.Get("/todo", func(c *fiber.Ctx) error {
 		collection := DBClient.Database("todo").Collection("todos")
-		cur, _ := collection.Find(c.Context(), bson.D{})
+		cur, _ := collection.Find(c.UserContext(), bson.D{})
 
-		results := make([]interface{}, 0)
-		cur.All(c.Context(), &results)
+		var results interface{}
+		cur.All(c.UserContext(), &results)
 
-		resp, _ := otelhttp.Get(c.Context(), "http://go-app-2:8090/ping")
-		results = append(results, resp)
+		resp, _ := otelhttp.Get(c.UserContext(), "http://go-app-2:8090/ping")
+		fmt.Println(resp)
 
-		c.SendStatus(http.StatusOK)
 		c.JSON(results)
 		return nil
 	})
-	if err := app.Listen(":8081"); err != nil {
+	if err := app.Listen(":8080"); err != nil {
 		panic(err)
 	}
 }

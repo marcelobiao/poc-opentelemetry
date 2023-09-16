@@ -22,6 +22,6 @@ func main() {
 	}()
 
 	// run webservers
-	// app.StartFiberWebServer()
-	app.StartGinWebServer()
+	app.StartFiberWebServer()
+	// app.StartGinWebServer()
 }

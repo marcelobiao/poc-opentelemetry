@@ -24,6 +24,6 @@ func main() {
 	app.StartMongo("mongodb://test:test@mongodb:27017")
 
 	// run webservers
-	// app.StartFiberWebServer()
-	app.StartGinWebServer()
+	app.StartFiberWebServer()
+	// app.StartGinWebServer()
 }
