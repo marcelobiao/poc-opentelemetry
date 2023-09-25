@@ -4,7 +4,7 @@
 
 
 <p align="center">
-    <img alt="semanaomnistack11" src="https://img.shields.io/badge/PRs-welcome-7159c1"></img>
+    <img alt="prs" src="https://img.shields.io/badge/PRs-welcome-7159c1"></img>
     <a href="https://github.com/marcelobiao/poc-opentelemetry/blob/master/LICENSE.md">
         <img alt="OTel" src="https://img.shields.io/badge/license-MIT-7159c1"></img>
     </a>
